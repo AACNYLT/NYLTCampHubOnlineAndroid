@@ -2,10 +2,12 @@ package org.aacnylt.camphubonline;
 
 import org.aacnylt.camphubonline.models.Scout;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by Aroon on 2/24/2018.
@@ -13,5 +15,11 @@ import retrofit2.http.GET;
 
 public interface ScoutService {
     @GET("scouts")
-    Call<List<Scout>> getAllScouts();
+    Call<ArrayList<Scout>> getAllScouts();
+
+    @GET("scouts/{id}")
+    Call<Scout> getScout(@Path("id") Integer ScoutID);
+
+    @GET("authenticate")
+    Call<Scout> authenticateScout(@Query("username") String username, @Query("password") String password);
 }

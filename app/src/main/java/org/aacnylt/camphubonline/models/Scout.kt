@@ -9,7 +9,7 @@ import java.util.*
 class Scout(
         var FirstName: String?,
         var LastName: String?,
-        var DateOfBirth: Date?,
+        var DateOfBirth: String?, // FIX THIS NONSENSE
         var Gender: String?,
         var ScoutID: Int?,
         var BSAID: Int?,
