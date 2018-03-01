@@ -27,20 +27,30 @@ class Login : Activity() {
             override fun onClick(v: View) {
                 val progressDialog = createProgressDialog(this@Login, "Logging in...")
                 progressDialog.show()
-                StaticScoutService.hostUrl = serverField.text.toString()
+                StaticScoutService.hostUrl = formatServerURL(serverField.text.toString())
                 createRetrofitService().authenticateScout(usernameField.text.toString(), passwordField.text.toString())
                         .enqueue(createCallback(progressDialog))
             }
         })
     }
 
+    private fun formatServerURL(url: String): String {
+        if (url.contains("http://"))
+            return url
+        return "http://" + url
+    }
+
     private fun createCallback(progressDialog: ProgressDialog): Callback<Scout> {
         return object : Callback<Scout> {
             override fun onResponse(call: Call<Scout>, response: Response<Scout>) {
                 progressDialog.dismiss()
-                StaticScoutService.CurrentUser = response.body()!!
-                val intent = Intent(this@Login, ScoutGrid::class.java)
-                startActivity(intent)
+                if (response.body() != null) {
+                    StaticScoutService.CurrentUser = response.body()!!
+                    val intent = Intent(this@Login, ScoutGrid::class.java)
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(applicationContext, "Unsuccessful login.", Toast.LENGTH_LONG).show()
+                }
             }
 
             override fun onFailure(call: Call<Scout>, t: Throwable) {

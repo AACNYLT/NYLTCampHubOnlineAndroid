@@ -2,8 +2,16 @@ package org.aacnylt.camphubonline
 
 import android.app.Activity
 import android.app.ProgressDialog
+import android.content.res.Configuration
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.app.AppCompatCallback
+import android.support.v7.app.AppCompatDelegate
+import android.support.v7.view.ActionMode
+import android.support.v7.widget.Toolbar
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.Toast
@@ -14,18 +22,38 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ScoutGrid : Activity() {
+class ScoutGrid : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scout_grid)
+        setSupportActionBar(findViewById(R.id.mainbar) as Toolbar)
         val progressDialog = createProgressDialog(this, "Loading scouts...")
         progressDialog.show()
         createRetrofitService().allScouts.enqueue(createCallback(progressDialog))
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.scoutgridmenu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item!!.itemId) {
+            R.id.logout -> {
+
+            }
+        }
+        return true
+    }
+
+//    override fun onConfigurationChanged(newConfig: Configuration?) {
+//        super.onConfigurationChanged(newConfig)
+//        setContentView(R.layout.activity_scout_grid)
+//    }
+
     private fun createCallback(progressDialog: ProgressDialog): Callback<ArrayList<Scout>> {
-       return object : Callback<ArrayList<Scout>> {
+        return object : Callback<ArrayList<Scout>> {
             override fun onResponse(call: Call<ArrayList<Scout>>, response: Response<ArrayList<Scout>>) {
                 val scoutGridView = findViewById(R.id.ScoutGrid) as ListView
                 val scoutList = response.body()!!
