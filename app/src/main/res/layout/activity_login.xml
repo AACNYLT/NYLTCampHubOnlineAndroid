@@ -22,7 +22,7 @@
         android:layout_below="@id/username"
         android:inputType="textPassword" />
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/server"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

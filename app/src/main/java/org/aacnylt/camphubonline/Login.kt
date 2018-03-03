@@ -2,9 +2,12 @@ package org.aacnylt.camphubonline
 
 import android.app.Activity
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.ArraySet
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import android.widget.*
 import org.aacnylt.camphubonline.StaticScoutService.createProgressDialog
@@ -19,19 +22,35 @@ class Login : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        loadServerAddress()
+        Log.e("onCreate", serverList.toString())
         val loginButton = findViewById(R.id.login) as Button
         val usernameField = findViewById(R.id.username) as EditText
         val passwordField = findViewById(R.id.password) as EditText
-        val serverField = findViewById(R.id.server) as EditText
+        val serverField = findViewById(R.id.server) as AutoCompleteTextView
+        val serverListAdapter = ArrayAdapter<String>(this@Login, android.R.layout.simple_list_item_1, serverList.toList())
+        serverField.setAdapter(serverListAdapter)
         loginButton.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View) {
-                val progressDialog = createProgressDialog(this@Login, "Logging in...")
-                progressDialog.show()
-                StaticScoutService.hostUrl = formatServerURL(serverField.text.toString())
-                createRetrofitService().authenticateScout(usernameField.text.toString(), passwordField.text.toString())
-                        .enqueue(createCallback(progressDialog))
+                startLogin(usernameField, passwordField, serverField)
             }
         })
+        serverField.setOnEditorActionListener(object : TextView.OnEditorActionListener {
+            override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+                startLogin(usernameField, passwordField, serverField)
+                return true
+            }
+        })
+    }
+
+    private fun startLogin(usernameField: EditText, passwordField: EditText, serverField: AutoCompleteTextView) {
+        if (usernameField.text.isNotEmpty() && passwordField.text.isNotEmpty() && serverField.text.isNotEmpty()) {
+            val progressDialog = createProgressDialog(this@Login, "Logging in...")
+            progressDialog.show()
+            StaticScoutService.hostUrl = formatServerURL(serverField.text.toString())
+            createRetrofitService().authenticateScout(usernameField.text.toString(), passwordField.text.toString())
+                    .enqueue(createCallback(progressDialog))
+        }
     }
 
     private fun formatServerURL(url: String): String {
@@ -46,6 +65,7 @@ class Login : Activity() {
                 progressDialog.dismiss()
                 if (response.body() != null) {
                     StaticScoutService.CurrentUser = response.body()!!
+                    saveServerAddress(StaticScoutService.hostUrl)
                     val intent = Intent(this@Login, ScoutGrid::class.java)
                     startActivity(intent)
                 } else {
@@ -58,5 +78,22 @@ class Login : Activity() {
                 Toast.makeText(applicationContext, t.toString(), Toast.LENGTH_LONG).show()
             }
         }
+    }
+
+    var serverList = HashSet<String>()
+
+    fun saveServerAddress(url: String) {
+        serverList.add(url)
+        Log.e("saveServerAddress", serverList.toString())
+        val prefs = this.getSharedPreferences("campHubServers",Context.MODE_PRIVATE) ?: return
+        with(prefs.edit()) {
+            putStringSet("serverlist", serverList)
+            commit()
+        }
+    }
+
+    fun loadServerAddress() {
+        val prefs = this.getSharedPreferences("campHubServers",Context.MODE_PRIVATE) ?: return
+        serverList = prefs.getStringSet("serverlist", HashSet<String>()) as HashSet<String>
     }
 }

@@ -2,6 +2,7 @@ package org.aacnylt.camphubonline
 
 import android.app.Activity
 import android.app.ProgressDialog
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -28,6 +29,10 @@ class ScoutGrid : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scout_grid)
         setSupportActionBar(findViewById(R.id.mainbar) as Toolbar)
+        loadScoutGrid()
+    }
+
+    fun loadScoutGrid() {
         val progressDialog = createProgressDialog(this, "Loading scouts...")
         progressDialog.show()
         createRetrofitService().allScouts.enqueue(createCallback(progressDialog))
@@ -41,7 +46,12 @@ class ScoutGrid : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item!!.itemId) {
             R.id.logout -> {
-
+                val intent = Intent(this@ScoutGrid, Login::class.java)
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                startActivity(intent)
+            }
+            R.id.refresh -> {
+                loadScoutGrid()
             }
         }
         return true

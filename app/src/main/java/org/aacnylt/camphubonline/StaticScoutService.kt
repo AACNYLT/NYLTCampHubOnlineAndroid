@@ -1,5 +1,6 @@
 package org.aacnylt.camphubonline
 
+import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
 import org.aacnylt.camphubonline.models.Scout
