@@ -28,6 +28,7 @@ class Login : Activity() {
         val usernameField = findViewById(R.id.username) as EditText
         val passwordField = findViewById(R.id.password) as EditText
         val serverField = findViewById(R.id.server) as AutoCompleteTextView
+        Log.e("toList", serverList.toList().toString())
         val serverListAdapter = ArrayAdapter<String>(this@Login, android.R.layout.simple_list_item_1, serverList.toList())
         serverField.setAdapter(serverListAdapter)
         loginButton.setOnClickListener(object : View.OnClickListener {
