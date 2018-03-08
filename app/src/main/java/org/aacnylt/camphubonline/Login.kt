@@ -5,14 +5,12 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.ArraySet
-import android.util.Log
 import android.view.KeyEvent
-import android.view.View
 import android.widget.*
-import org.aacnylt.camphubonline.StaticScoutService.createProgressDialog
-import org.aacnylt.camphubonline.StaticScoutService.createRetrofitService
+import org.aacnylt.camphubonline.utils.StaticScoutService.createProgressDialog
+import org.aacnylt.camphubonline.utils.StaticScoutService.createRetrofitService
 import org.aacnylt.camphubonline.models.Scout
+import org.aacnylt.camphubonline.utils.StaticScoutService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,19 +21,16 @@ class Login : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         loadServerAddress()
-        Log.e("onCreate", serverList.toString())
         val loginButton = findViewById(R.id.login) as Button
         val usernameField = findViewById(R.id.username) as EditText
         val passwordField = findViewById(R.id.password) as EditText
         val serverField = findViewById(R.id.server) as AutoCompleteTextView
-        Log.e("toList", serverList.toList().toString())
         val serverListAdapter = ArrayAdapter<String>(this@Login, android.R.layout.simple_list_item_1, serverList.toList())
         serverField.setAdapter(serverListAdapter)
-        loginButton.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View) {
+        loginButton.setOnClickListener  {
                 startLogin(usernameField, passwordField, serverField)
             }
-        })
+        serverField.setImeActionLabel(getString(R.string.login), KeyEvent.KEYCODE_ENTER)
         serverField.setOnEditorActionListener(object : TextView.OnEditorActionListener {
             override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
                 startLogin(usernameField, passwordField, serverField)
@@ -75,7 +70,6 @@ class Login : Activity() {
             }
 
             override fun onFailure(call: Call<Scout>, t: Throwable) {
-                Log.e("getFailure", t.message, t)
                 Toast.makeText(applicationContext, t.toString(), Toast.LENGTH_LONG).show()
             }
         }
@@ -85,7 +79,6 @@ class Login : Activity() {
 
     fun saveServerAddress(url: String) {
         serverList.add(url)
-        Log.e("saveServerAddress", serverList.toString())
         val prefs = this.getSharedPreferences("campHubServers",Context.MODE_PRIVATE) ?: return
         with(prefs.edit()) {
             putStringSet("serverlist", serverList)

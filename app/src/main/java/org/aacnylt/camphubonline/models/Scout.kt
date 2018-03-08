@@ -1,5 +1,8 @@
 package org.aacnylt.camphubonline.models
 
+import android.net.Uri
+import org.aacnylt.camphubonline.utils.StaticScoutService
+import java.net.URI
 import java.util.*
 
 /**
@@ -27,5 +30,13 @@ class Scout(
 ) {
     override fun toString(): String {
         return FirstName + " " + LastName
+    }
+
+    fun imageUrl(): String {
+        return Uri.parse(StaticScoutService.hostUrl).buildUpon()
+                .appendPath("scouts")
+                .appendPath(ScoutID.toString())
+                .appendPath("image")
+                .build().toString()
     }
 }

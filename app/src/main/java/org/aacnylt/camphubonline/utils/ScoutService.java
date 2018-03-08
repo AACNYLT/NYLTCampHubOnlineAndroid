@@ -1,4 +1,4 @@
-package org.aacnylt.camphubonline;
+package org.aacnylt.camphubonline.utils;
 
 import org.aacnylt.camphubonline.models.Scout;
 

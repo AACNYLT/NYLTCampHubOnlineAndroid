@@ -34,5 +34,5 @@
         android:id="@+id/login"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="Log In" />
+        android:text="@string/login" />
 </android.widget.LinearLayout>
