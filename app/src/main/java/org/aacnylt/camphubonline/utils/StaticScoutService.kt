@@ -10,6 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  * Created by Aroon on 2/24/2018.
  */
 internal object StaticScoutService {
+    // TODO: throw an error if hostURL gets like nullified somehow to force a return to login
     fun createRetrofitService(): ScoutService {
         val retrofit = Retrofit.Builder()
                 .baseUrl(hostUrl)

@@ -1,5 +1,6 @@
 package org.aacnylt.camphubonline
 
+import android.app.ActivityManager
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
@@ -8,13 +9,12 @@ import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.Toast
-import org.aacnylt.camphubonline.utils.StaticScoutService.createProgressDialog
-import org.aacnylt.camphubonline.utils.StaticScoutService.createRetrofitService
 import org.aacnylt.camphubonline.models.Scout
 import org.aacnylt.camphubonline.utils.ScoutGridAdapter
+import org.aacnylt.camphubonline.utils.StaticScoutService.createProgressDialog
+import org.aacnylt.camphubonline.utils.StaticScoutService.createRetrofitService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -43,8 +43,9 @@ class ScoutGrid : AppCompatActivity() {
         when (item!!.itemId) {
             R.id.logout -> {
                 val intent = Intent(this@ScoutGrid, Login::class.java)
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
+                finish()
             }
             R.id.refresh -> {
                 loadScoutGrid()
@@ -63,7 +64,7 @@ class ScoutGrid : AppCompatActivity() {
             override fun onResponse(call: Call<ArrayList<Scout>>, response: Response<ArrayList<Scout>>) {
                 val scoutGridView = findViewById(R.id.ScoutGrid) as ListView
                 val scoutList = response.body()!!
-                val adapter = ScoutGridAdapter(this@ScoutGrid,  scoutList)
+                val adapter = ScoutGridAdapter(this@ScoutGrid, scoutList)
                 scoutGridView.adapter = adapter
                 progressDialog.dismiss()
             }

@@ -18,7 +18,7 @@
         <activity
             android:name=".ScoutGrid"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:theme="@style/ToolbarTheme"></activity>
         <activity
             android:name=".Login"
             android:noHistory="true">
