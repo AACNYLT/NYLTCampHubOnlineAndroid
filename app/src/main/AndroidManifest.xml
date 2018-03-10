@@ -10,15 +10,14 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/ToolbarTheme">
         <meta-data
             android:name="asset_statements"
             android:resource="@string/asset_statements" />
 
         <activity
             android:name=".ScoutGrid"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@style/ToolbarTheme"></activity>
+            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
         <activity
             android:name=".Login"
             android:noHistory="true">
