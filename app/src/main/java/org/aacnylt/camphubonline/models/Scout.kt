@@ -2,6 +2,7 @@ package org.aacnylt.camphubonline.models
 
 import android.net.Uri
 import org.aacnylt.camphubonline.utils.StaticScoutService
+import java.io.Serializable
 import java.net.URI
 import java.util.*
 
@@ -27,7 +28,7 @@ class Scout(
         var CourseName: String?,
         var LastModified: Date?,
         var Created: Date?
-) {
+): Serializable {
     override fun toString(): String {
         return FirstName + " " + LastName
     }

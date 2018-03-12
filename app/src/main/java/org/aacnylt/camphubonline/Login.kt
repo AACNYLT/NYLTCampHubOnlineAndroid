@@ -30,12 +30,12 @@ class Login : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         loadServerAddress()
-        loginContainer = findViewById(R.id.LoginContainer) as CoordinatorLayout
-        setSupportActionBar(findViewById(R.id.loginbar) as Toolbar)
-        val loginButton = findViewById(R.id.login) as Button
-        val usernameField = findViewById(R.id.username) as EditText
-        val passwordField = findViewById(R.id.password) as EditText
-        val serverField = findViewById(R.id.server) as AutoCompleteTextView
+        loginContainer = findViewById<CoordinatorLayout>(R.id.LoginContainer)
+        setSupportActionBar(findViewById(R.id.loginbar))
+        val loginButton = findViewById<Button>(R.id.login)
+        val usernameField = findViewById<EditText>(R.id.username)
+        val passwordField = findViewById<EditText>(R.id.password)
+        val serverField = findViewById<AutoCompleteTextView>(R.id.server)
         val serverListAdapter = ArrayAdapter<String>(this@Login, android.R.layout.simple_list_item_1, serverList.toList())
         serverField.setAdapter(serverListAdapter)
         loginButton.setOnClickListener  {

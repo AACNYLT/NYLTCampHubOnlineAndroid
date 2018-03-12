@@ -3,4 +3,9 @@
     <string name="login">Log In</string>
     <string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://nyltcamphub.azurewebsites.net\",\n  }\n}]</string>
     <string name="about">About CampHub Online</string>
+    <string name="test_string">Day Final \u00B7 SPL</string>
+    <string name="eval_header">Day %s1 \u00B7 %s2</string>
+    <string name="eval_recommend">recommendation: %s1</string>
+    <string name="tap_comments">tap for comments</string>
+    <string name="refresh">Refresh</string>
 </resources>

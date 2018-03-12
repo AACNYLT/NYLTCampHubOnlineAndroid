@@ -17,7 +17,7 @@
 
         <activity
             android:name=".ScoutGrid"
-            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
+            android:configChanges="keyboardHidden|orientation|screenSize" />
         <activity
             android:name=".Login"
             android:noHistory="true">
@@ -35,10 +35,11 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="http"
-                    android:host="nyltcamphub.azurewebsites.net" />
+                    android:host="nyltcamphub.azurewebsites.net"
+                    android:scheme="http" />
             </intent-filter>
         </activity>
+        <activity android:name=".ScoutActivity"></activity>
     </application>
 
 </manifest>

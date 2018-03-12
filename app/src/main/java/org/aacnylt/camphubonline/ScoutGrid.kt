@@ -1,12 +1,10 @@
 package org.aacnylt.camphubonline
 
-import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
-import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -14,7 +12,6 @@ import android.widget.ListView
 import android.widget.Toast
 import org.aacnylt.camphubonline.models.Scout
 import org.aacnylt.camphubonline.utils.ScoutGridAdapter
-import org.aacnylt.camphubonline.utils.StaticScoutService.createProgressDialog
 import org.aacnylt.camphubonline.utils.StaticScoutService.createRetrofitService
 import retrofit2.Call
 import retrofit2.Callback
@@ -27,13 +24,20 @@ class ScoutGrid : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scout_grid)
-        setSupportActionBar(findViewById(R.id.mainbar) as Toolbar)
-        (findViewById(R.id.ScoutGridSwipeContainer) as SwipeRefreshLayout).setOnRefreshListener { loadScoutGrid() }
+        setSupportActionBar(findViewById(R.id.mainbar))
+        (findViewById<SwipeRefreshLayout>(R.id.ScoutGridSwipeContainer)).setOnRefreshListener { loadScoutGrid() }
+        val scoutGridView = findViewById<ListView>(R.id.ScoutGrid)
+        scoutGridView.setOnItemClickListener { _, _, position, _ ->
+            val selectedScout = scoutGridView.getItemAtPosition(position) as Scout
+            val intent = Intent(this@ScoutGrid, ScoutActivity::class.java)
+            intent.putExtra("scout", selectedScout)
+            startActivity(intent)
+        }
         loadScoutGrid()
     }
 
     fun loadScoutGrid() {
-        (findViewById(R.id.ScoutGridSwipeContainer) as SwipeRefreshLayout).isRefreshing = true
+        (findViewById<SwipeRefreshLayout>(R.id.ScoutGridSwipeContainer)).isRefreshing = true
         createRetrofitService().allScouts.enqueue(createCallback())
     }
 
@@ -110,19 +114,19 @@ class ScoutGrid : AppCompatActivity() {
             override fun onResponse(call: Call<ArrayList<Scout>>, response: Response<ArrayList<Scout>>) {
                 mainScoutList = response.body()!!
                 setScoutGrid(mainScoutList)
-                (findViewById(R.id.ScoutGridSwipeContainer) as SwipeRefreshLayout).isRefreshing = false
+                (findViewById<SwipeRefreshLayout>(R.id.ScoutGridSwipeContainer)).isRefreshing = false
             }
 
             override fun onFailure(call: Call<ArrayList<Scout>>, t: Throwable) {
                 Log.e("getFailure", t.message, t)
-                (findViewById(R.id.ScoutGridSwipeContainer) as SwipeRefreshLayout).isRefreshing = false
+                (findViewById<SwipeRefreshLayout>(R.id.ScoutGridSwipeContainer)).isRefreshing = false
                 Toast.makeText(applicationContext, t.toString(), Toast.LENGTH_LONG).show()
             }
         }
     }
 
     private fun setScoutGrid(scoutList: ArrayList<Scout>) {
-        val scoutGridView = findViewById(R.id.ScoutGrid) as ListView
+        val scoutGridView = findViewById<ListView>(R.id.ScoutGrid)
         val adapter = ScoutGridAdapter(this@ScoutGrid, scoutList)
         scoutGridView.adapter = adapter
     }

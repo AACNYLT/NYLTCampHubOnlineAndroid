@@ -1,5 +1,6 @@
 package org.aacnylt.camphubonline.utils;
 
+import org.aacnylt.camphubonline.models.Evaluation;
 import org.aacnylt.camphubonline.models.Scout;
 
 import java.util.ArrayList;
@@ -19,6 +20,9 @@ public interface ScoutService {
 
     @GET("scouts/{id}")
     Call<Scout> getScout(@Path("id") Integer ScoutID);
+
+    @GET("scouts/{id}/evaluations")
+    Call<ArrayList<Evaluation>> getScoutEvaluations(@Path("id") Integer ScoutID);
 
     @GET("authenticate")
     Call<Scout> authenticateScout(@Query("username") String username, @Query("password") String password);

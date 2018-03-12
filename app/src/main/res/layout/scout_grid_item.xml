@@ -9,8 +9,7 @@
         android:layout_height="match_parent"
         android:layout_margin="4dp"
         app:cardCornerRadius="1dp"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:clickable="true">
+        android:foreground="?android:attr/selectableItemBackground">
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"

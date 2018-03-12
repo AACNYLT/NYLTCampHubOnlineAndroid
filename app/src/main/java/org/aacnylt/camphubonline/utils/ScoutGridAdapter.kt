@@ -27,9 +27,9 @@ class ScoutGridAdapter(context: Context, list: ArrayList<Scout>) : ArrayAdapter<
         listItem!!
         val currentScout = scoutList[position]
 
-        val scoutImage = listItem.findViewById(R.id.ScoutItemImage) as ImageView
-        val scoutName = listItem.findViewById(R.id.ScoutItemName) as TextView
-        val scoutTeam = listItem.findViewById(R.id.ScoutItemTeam) as TextView
+        val scoutImage = listItem.findViewById<ImageView>(R.id.ScoutItemImage)
+        val scoutName = listItem.findViewById<TextView>(R.id.ScoutItemName)
+        val scoutTeam = listItem.findViewById<TextView>(R.id.ScoutItemTeam)
 
         Picasso.with(localContext).load(currentScout.imageUrl()).into(scoutImage)
         scoutName.text = currentScout.toString()
@@ -37,4 +37,6 @@ class ScoutGridAdapter(context: Context, list: ArrayList<Scout>) : ArrayAdapter<
 
         return listItem
     }
+
+
 }
