@@ -2,6 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/EditProfile"
+        android:icon="@drawable/ic_edit"
+        android:title="@string/edit_profile"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/EvalListRefresh"
         android:icon="@drawable/ic_refresh"
         android:title="@string/refresh"

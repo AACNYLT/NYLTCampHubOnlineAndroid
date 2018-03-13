@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Toast
@@ -18,6 +19,8 @@ import kotlinx.android.synthetic.main.activity_scout.*
 import org.aacnylt.camphubonline.models.Evaluation
 import org.aacnylt.camphubonline.models.Scout
 import org.aacnylt.camphubonline.utils.EvalListAdapter
+import org.aacnylt.camphubonline.utils.ScoutService
+import org.aacnylt.camphubonline.utils.StaticScoutService.CurrentUser
 import org.aacnylt.camphubonline.utils.StaticScoutService.createRetrofitService
 import retrofit2.Call
 import retrofit2.Callback
@@ -42,6 +45,9 @@ class ScoutActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.scoutactivitymenu, menu)
+        if (CurrentUser.IsAdmin != true) {
+            menu!!.findItem(R.id.EditProfile).isVisible = false
+        }
         return true
     }
 
@@ -61,7 +67,7 @@ class ScoutActivity : AppCompatActivity() {
         return object : Callback<ArrayList<Evaluation>> {
             override fun onResponse(call: Call<ArrayList<Evaluation>>, response: Response<ArrayList<Evaluation>>) {
                 (findViewById<SwipeRefreshLayout>(R.id.EvalListContainer)).isRefreshing = false
-                val evalList = response.body()!!
+                val evalList = filterEvals(response.body()!!)
                 setEvalList(evalList)
             }
 
@@ -75,10 +81,37 @@ class ScoutActivity : AppCompatActivity() {
 
     private fun setEvalList(list: ArrayList<Evaluation>) {
         val viewManager = LinearLayoutManager(this)
-        val viewAdapter = EvalListAdapter(list, this)
+        val viewAdapter = EvalListAdapter(list, this, {
+            launchCommentModal(it)
+        })
         findViewById<RecyclerView>(R.id.EvalList).apply {
             layoutManager = viewManager
             adapter = viewAdapter
+        }
+    }
+
+    private fun launchCommentModal(eval: Evaluation) {
+        val builder = AlertDialog.Builder(this@ScoutActivity)
+        builder.setTitle(getString(R.string.eval_comments_header_preload))
+        builder.setMessage(eval.Comments)
+        val alert = builder.create()
+        alert.show()
+        createRetrofitService().getScout(eval.EvaluatorID).enqueue(object : Callback<Scout> {
+            override fun onResponse(call: Call<Scout>?, response: Response<Scout>?) {
+                if (response != null) {
+                    alert.setTitle(getString(R.string.eval_comments_header).replace("%s1", response.body().toString()))
+                }
+            }
+
+            override fun onFailure(call: Call<Scout>?, t: Throwable?) {}
+        })
+    }
+
+    private fun filterEvals(evalList: ArrayList<Evaluation>): ArrayList<Evaluation> {
+        if (CurrentUser.IsAdmin != true) {
+            return ArrayList(evalList.filter { evaluation -> evaluation.EvaluatorID == CurrentUser.ScoutID })
+        } else {
+            return evalList
         }
     }
 }

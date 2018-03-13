@@ -2,7 +2,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="200dp">
+    android:layout_height="200dp"
+    android:clickable="true"
+    android:focusable="true">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -30,10 +32,59 @@
                 android:layout_alignParentTop="true" />
 
             <LinearLayout
+                android:id="@+id/EvalItemLabels"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/EvalItemHeader"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="10dp"
+                android:gravity="end"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/knowledge"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/skill"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/confidence"
+
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/motivation"
+
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/enthusiasm"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/EvalItemHeader"
                 android:layout_marginTop="10dp"
+                android:layout_toEndOf="@id/EvalItemLabels"
                 android:orientation="vertical">
 
 
@@ -41,35 +92,40 @@
                     android:id="@+id/KnowledgeItem"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:progressTint="@color/colorAccent" />
 
                 <ProgressBar
                     android:id="@+id/SkillItem"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp" />
+                    android:layout_marginTop="5dp"
+                    android:progressTint="@color/colorAccent" />
 
                 <ProgressBar
                     android:id="@+id/ConfidenceItem"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp" />
+                    android:layout_marginTop="5dp"
+                    android:progressTint="@color/colorAccent" />
 
                 <ProgressBar
                     android:id="@+id/MotivationItem"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp" />
+                    android:layout_marginTop="5dp"
+                    android:progressTint="@color/colorAccent"/>
 
                 <ProgressBar
                     android:id="@+id/EnthusiamItem"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp" />
+                    android:layout_marginTop="5dp"
+                    android:progressTint="@color/colorAccent" />
             </LinearLayout>
 
             <TextView
@@ -77,11 +133,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
+                android:layout_alignParentEnd="true"
                 android:text="@string/tap_comments" />
         </RelativeLayout>
     </android.support.v7.widget.CardView>

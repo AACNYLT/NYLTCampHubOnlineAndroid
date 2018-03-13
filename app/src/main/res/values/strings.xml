@@ -5,7 +5,17 @@
     <string name="about">About CampHub Online</string>
     <string name="test_string">Day Final \u00B7 SPL</string>
     <string name="eval_header">Day %s1 \u00B7 %s2</string>
+    <string name="scout_subheader">%s1 \u00B7 </string>
+    <string name="separator">\u00B7</string>
     <string name="eval_recommend">recommendation: %s1</string>
     <string name="tap_comments">tap for comments</string>
     <string name="refresh">Refresh</string>
+    <string name="knowledge">knowledge</string>
+    <string name="skill">skill</string>
+    <string name="confidence">confidence</string>
+    <string name="motivation">motivation</string>
+    <string name="enthusiasm">enthusiasm</string>
+    <string name="eval_comments_header">Comments by %s1</string>
+    <string name="eval_comments_header_preload">Comments</string>
+    <string name="edit_profile">Edit Profile</string>
 </resources>

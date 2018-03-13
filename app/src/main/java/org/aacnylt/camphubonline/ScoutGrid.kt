@@ -9,9 +9,11 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ListView
+import android.widget.PopupMenu
 import android.widget.Toast
 import org.aacnylt.camphubonline.models.Scout
 import org.aacnylt.camphubonline.utils.ScoutGridAdapter
+import org.aacnylt.camphubonline.utils.StaticScoutService.CurrentUser
 import org.aacnylt.camphubonline.utils.StaticScoutService.createRetrofitService
 import retrofit2.Call
 import retrofit2.Callback
@@ -32,6 +34,12 @@ class ScoutGrid : AppCompatActivity() {
             val intent = Intent(this@ScoutGrid, ScoutActivity::class.java)
             intent.putExtra("scout", selectedScout)
             startActivity(intent)
+        }
+        scoutGridView.setOnItemLongClickListener { parent, view, position, id ->
+            val contextMenu = PopupMenu(this, view)
+            contextMenu.menuInflater.inflate(R.menu.scoutcontextmenu, contextMenu.menu)
+            contextMenu.show()
+            true
         }
         loadScoutGrid()
     }
@@ -112,7 +120,7 @@ class ScoutGrid : AppCompatActivity() {
     private fun createCallback(): Callback<ArrayList<Scout>> {
         return object : Callback<ArrayList<Scout>> {
             override fun onResponse(call: Call<ArrayList<Scout>>, response: Response<ArrayList<Scout>>) {
-                mainScoutList = response.body()!!
+                mainScoutList = removeSelf(response.body()!!)
                 setScoutGrid(mainScoutList)
                 (findViewById<SwipeRefreshLayout>(R.id.ScoutGridSwipeContainer)).isRefreshing = false
             }
@@ -123,6 +131,13 @@ class ScoutGrid : AppCompatActivity() {
                 Toast.makeText(applicationContext, t.toString(), Toast.LENGTH_LONG).show()
             }
         }
+    }
+
+    private fun removeSelf(scoutList: ArrayList<Scout>): ArrayList<Scout> {
+        if (CurrentUser.IsAdmin != true) {
+            scoutList.removeAt(scoutList.indexOfFirst { scout -> scout.ScoutID == CurrentUser.ScoutID })
+        }
+        return scoutList
     }
 
     private fun setScoutGrid(scoutList: ArrayList<Scout>) {

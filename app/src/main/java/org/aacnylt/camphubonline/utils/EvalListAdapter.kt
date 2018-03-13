@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ProgressBar
 import android.widget.TextView
 import org.aacnylt.camphubonline.R
@@ -16,9 +17,8 @@ import java.util.*
 /**
  * Created by Aroon on 3/11/2018.
  */
-class EvalListAdapter(private val evalList: ArrayList<Evaluation>, val context: Context) : RecyclerView.Adapter<EvalListAdapter.ViewHolder>() {
+class EvalListAdapter(private val evalList: ArrayList<Evaluation>, private val context: Context, private val listener: (Evaluation) -> Unit) : RecyclerView.Adapter<EvalListAdapter.ViewHolder>() {
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view)
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.evaluation_item, parent, false)
@@ -38,6 +38,7 @@ class EvalListAdapter(private val evalList: ArrayList<Evaluation>, val context: 
         holder.view.findViewById<ProgressBar>(R.id.MotivationItem).progress = ((eval.Motivation ?: 0.0) * 20).toInt()
         holder.view.findViewById<ProgressBar>(R.id.EnthusiamItem).progress = ((eval.Enthusiasm ?: 0.0) * 20).toInt()
         holder.view.findViewById<TextView>(R.id.EvalItemRecommend).text = context.getString(R.string.eval_recommend).replace("%s1", getRecommendation(eval))
+        holder.view.setOnClickListener {listener(eval)}
     }
 
     private fun getRecommendation(eval: Evaluation): String {

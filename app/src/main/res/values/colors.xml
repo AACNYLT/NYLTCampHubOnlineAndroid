@@ -4,4 +4,10 @@
     <color name="colorPrimaryDark">#209351</color>
     <color name="colorAccent">#27ae60</color>
     <drawable name="transparent">#00000000</drawable>
+    <color name="knowledge">#E74C3C</color>
+    <color name="skill">#F39C12</color>
+    <color name="confidence">#2ECC71</color>
+    <color name="enthusiasm">#3498DB</color>
+    <color name="motivation">#9B59B6</color>
+    <color name="staff">#228B22</color>
 </resources>
