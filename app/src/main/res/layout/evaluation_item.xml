@@ -29,104 +29,121 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true" />
-
-            <LinearLayout
-                android:id="@+id/EvalItemLabels"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/EvalItemHeader"
-                android:layout_marginEnd="5dp"
-                android:layout_marginTop="10dp"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@id/EvalItemHeader"
                 android:gravity="end"
-                android:orientation="vertical">
+                android:singleLine="true" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/knowledge"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="@string/skill"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="@string/confidence"
-
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="@string/motivation"
-
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/enthusiasm"
-                    android:textSize="12sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
+            <TableLayout
+                android:id="@+id/EvalItemSummary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/EvalItemHeader"
-                android:layout_marginTop="10dp"
-                android:layout_toEndOf="@id/EvalItemLabels"
-                android:orientation="vertical">
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="8dp"
+                android:stretchColumns="1">
 
+                <TableRow>
 
-                <ProgressBar
-                    android:id="@+id/KnowledgeItem"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:progressTint="@color/colorAccent" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:text="@string/knowledge"
+                        android:textSize="12sp" />
 
-                <ProgressBar
-                    android:id="@+id/SkillItem"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:progressTint="@color/colorAccent" />
+                    <ProgressBar
+                        android:id="@+id/KnowledgeItem"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:layout_gravity="bottom"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginStart="5dp"
+                        android:progressTint="@color/colorAccent" />
 
-                <ProgressBar
-                    android:id="@+id/ConfidenceItem"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:progressTint="@color/colorAccent" />
+                </TableRow>
 
-                <ProgressBar
-                    android:id="@+id/MotivationItem"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:progressTint="@color/colorAccent"/>
+                <TableRow android:layout_marginTop="3dp">
 
-                <ProgressBar
-                    android:id="@+id/EnthusiamItem"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:progressTint="@color/colorAccent" />
-            </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:text="@string/skill"
+                        android:textSize="12sp" />
+
+                    <ProgressBar
+                        android:id="@+id/SkillItem"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:layout_gravity="bottom"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginStart="5dp"
+                        android:progressTint="@color/colorAccent" />
+                </TableRow>
+
+                <TableRow android:layout_marginTop="3dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:text="@string/confidence"
+                        android:textSize="12sp" />
+
+                    <ProgressBar
+                        android:id="@+id/ConfidenceItem"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:layout_gravity="bottom"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginStart="5dp"
+                        android:progressTint="@color/colorAccent" />
+                </TableRow>
+
+                <TableRow android:layout_marginTop="3dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:text="@string/motivation"
+                        android:textSize="12sp" />
+
+                    <ProgressBar
+                        android:id="@+id/MotivationItem"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:layout_gravity="bottom"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginStart="5dp"
+                        android:progressTint="@color/colorAccent" />
+                </TableRow>
+
+                <TableRow android:layout_marginTop="3dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:text="@string/enthusiasm"
+                        android:textSize="12sp" />
+
+                    <ProgressBar
+                        android:id="@+id/EnthusiamItem"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:layout_gravity="bottom"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginStart="5dp"
+                        android:progressTint="@color/colorAccent" />
+                </TableRow>
+            </TableLayout>
 
             <TextView
                 android:id="@+id/EvalItemRecommend"
@@ -135,10 +152,14 @@
                 android:layout_alignParentBottom="true" />
 
             <TextView
+                android:id="@+id/EvalItemCommentLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@id/EvalItemRecommend"
+                android:gravity="end"
+                android:singleLine="true"
                 android:text="@string/tap_comments" />
         </RelativeLayout>
     </android.support.v7.widget.CardView>

@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import org.aacnylt.camphubonline.utils.StaticScoutService.createProgressDialog
 import org.aacnylt.camphubonline.utils.StaticScoutService.createRetrofitService
@@ -71,6 +72,7 @@ class Login : AppCompatActivity() {
 
     private fun startLogin(usernameField: EditText, passwordField: EditText, serverField: AutoCompleteTextView) {
         if (usernameField.text.isNotEmpty() && passwordField.text.isNotEmpty() && serverField.text.isNotEmpty()) {
+            (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(currentFocus.windowToken, 0)
             val progressDialog = createProgressDialog(this@Login, "Logging in...")
             progressDialog.show()
             StaticScoutService.hostUrl = formatServerURL(serverField.text.toString())

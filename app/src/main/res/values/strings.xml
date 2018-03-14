@@ -9,6 +9,7 @@
     <string name="separator">\u00B7</string>
     <string name="eval_recommend">recommendation: %s1</string>
     <string name="tap_comments">tap for comments</string>
+    <string name="hold_edit">hold to edit</string>
     <string name="refresh">Refresh</string>
     <string name="knowledge">knowledge</string>
     <string name="skill">skill</string>
@@ -18,4 +19,6 @@
     <string name="eval_comments_header">Comments by %s1</string>
     <string name="eval_comments_header_preload">Comments</string>
     <string name="edit_profile">Edit Profile</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>

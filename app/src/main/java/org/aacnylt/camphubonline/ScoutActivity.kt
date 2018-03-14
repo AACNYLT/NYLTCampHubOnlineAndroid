@@ -3,6 +3,7 @@ package org.aacnylt.camphubonline
 import android.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.app.NavUtils
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -13,6 +14,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ImageView
+import android.widget.PopupMenu
 import android.widget.Toast
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_scout.*
@@ -37,6 +39,7 @@ class ScoutActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.ScoutToolbar)
         toolbar.title = currentScout.toString()
         setSupportActionBar(toolbar)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         (findViewById<SwipeRefreshLayout>(R.id.EvalListContainer)).setOnRefreshListener { loadEvalList() }
         val scoutImage = findViewById<ImageView>(R.id.ScoutImage)
         Picasso.with(this).load(currentScout.imageUrl()).into(scoutImage)
@@ -54,6 +57,7 @@ class ScoutActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item!!.itemId) {
             R.id.EvalListRefresh -> loadEvalList()
+            android.R.id.home -> NavUtils.navigateUpFromSameTask(this@ScoutActivity)
         }
         return true
     }
@@ -83,7 +87,7 @@ class ScoutActivity : AppCompatActivity() {
         val viewManager = LinearLayoutManager(this)
         val viewAdapter = EvalListAdapter(list, this, {
             launchCommentModal(it)
-        })
+        }, { evaluation, view -> launchEvalContextMenu(evaluation, view) })
         findViewById<RecyclerView>(R.id.EvalList).apply {
             layoutManager = viewManager
             adapter = viewAdapter
@@ -107,8 +111,20 @@ class ScoutActivity : AppCompatActivity() {
         })
     }
 
-    private fun filterEvals(evalList: ArrayList<Evaluation>): ArrayList<Evaluation> {
+    private fun launchEvalContextMenu(eval: Evaluation, v: View) {
+        val contextMenu = PopupMenu(this, v)
+        contextMenu.menuInflater.inflate(R.menu.evalcontextmenu, contextMenu.menu)
+        if (eval.EvaluatorID != CurrentUser.ScoutID) {
+            contextMenu.menu.findItem(R.id.EvalContextEdit).isVisible = false
+        }
         if (CurrentUser.IsAdmin != true) {
+            contextMenu.menu.findItem(R.id.EvalContextDelete).isVisible = false
+        }
+        contextMenu.show()
+    }
+
+    private fun filterEvals(evalList: ArrayList<Evaluation>): ArrayList<Evaluation> {
+        if (CurrentUser.IsElevated != true) {
             return ArrayList(evalList.filter { evaluation -> evaluation.EvaluatorID == CurrentUser.ScoutID })
         } else {
             return evalList
