@@ -42,8 +42,9 @@
         <activity android:name=".ScoutActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Login" />
+                android:value=".ScoutGrid" />
         </activity>
+        <activity android:name=".ScoutEditActivity"></activity>
     </application>
 
 </manifest>

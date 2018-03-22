@@ -1,11 +1,14 @@
 package org.aacnylt.camphubonline.utils;
 
+import org.aacnylt.camphubonline.models.Course;
 import org.aacnylt.camphubonline.models.Evaluation;
+import org.aacnylt.camphubonline.models.Message;
 import org.aacnylt.camphubonline.models.Scout;
 
 import java.util.ArrayList;
 
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -21,9 +24,15 @@ public interface ScoutService {
     @GET("scouts/{id}")
     Call<Scout> getScout(@Path("id") Integer ScoutID);
 
+    @DELETE("scouts/{id}")
+    Call<Message> deleteScout(@Path("id") Integer ScoutID);
+
     @GET("scouts/{id}/evaluations")
     Call<ArrayList<Evaluation>> getScoutEvaluations(@Path("id") Integer ScoutID);
 
     @GET("authenticate")
     Call<Scout> authenticateScout(@Query("username") String username, @Query("password") String password);
+
+    @GET("courses")
+    Call<ArrayList<Course>> getCourses();
 }

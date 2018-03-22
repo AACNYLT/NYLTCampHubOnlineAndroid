@@ -1,6 +1,7 @@
 package org.aacnylt.camphubonline
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.NavUtils
@@ -57,9 +58,16 @@ class ScoutActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item!!.itemId) {
             R.id.EvalListRefresh -> loadEvalList()
+            R.id.EditProfile -> launchEditProfile()
             android.R.id.home -> NavUtils.navigateUpFromSameTask(this@ScoutActivity)
         }
         return true
+    }
+
+    fun launchEditProfile() {
+        val intent = Intent(this@ScoutActivity, ScoutEditActivity::class.java)
+        intent.putExtra("scout", currentScout)
+        startActivity(intent)
     }
 
     fun loadEvalList() {

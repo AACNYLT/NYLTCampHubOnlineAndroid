@@ -34,13 +34,13 @@ android:layout_margin="10dp"
                 android:layout_width="300dp"
 
                 android:layout_height="wrap_content"
-                android:hint="Username" />
+                android:hint="@string/username" />
 
             <EditText
                 android:id="@+id/password"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:hint="Password"
+                android:hint="@string/password"
                 android:inputType="textPassword" />
 
             <AutoCompleteTextView
@@ -48,7 +48,7 @@ android:layout_margin="10dp"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:completionThreshold="0"
-                android:hint="Server"
+                android:hint="@string/server"
                 android:inputType="textUri" />
 
             <Button

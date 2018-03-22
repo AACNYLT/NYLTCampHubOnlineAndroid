@@ -21,4 +21,22 @@
     <string name="edit_profile">Edit Profile</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="firstname">First Name</string>
+    <string name="lastname">Last Name</string>
+    <string name="dateofbirth">Date of Birth</string>
+    <string name="gender">Gender</string>
+    <string name="scoutid">Scout ID</string>
+    <string name="bsaid">BSA ID</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="position">Position</string>
+    <string name="team">Team</string>
+    <string name="isadmin">Is Admin</string>
+    <string name="isyouth">Is Youth</string>
+    <string name="isstaff">Is Staff</string>
+    <string name="iselevated">Is Senior Staff</string>
+    <string name="coursename">Course Name</string>
+    <string name="lastmodified">Last Modified</string>
+    <string name="created">Created</string>
+    <string name="server">Server</string>
 </resources>

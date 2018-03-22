@@ -35,13 +35,26 @@ class ScoutGrid : AppCompatActivity() {
             intent.putExtra("scout", selectedScout)
             startActivity(intent)
         }
-        scoutGridView.setOnItemLongClickListener { parent, view, position, id ->
+        scoutGridView.setOnItemLongClickListener { _, view, position, _ ->
+            val selectedScout = scoutGridView.getItemAtPosition(position) as Scout
             val contextMenu = PopupMenu(this, view)
             contextMenu.menuInflater.inflate(R.menu.scoutcontextmenu, contextMenu.menu)
+            contextMenu.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.ScoutContextEdit -> launchEditProfile(selectedScout)
+                }
+                true
+            }
             contextMenu.show()
             true
         }
         loadScoutGrid()
+    }
+
+    private fun launchEditProfile(selectedScout: Scout) {
+        val intent = Intent(this@ScoutGrid, ScoutEditActivity::class.java)
+        intent.putExtra("scout", selectedScout)
+        startActivity(intent)
     }
 
     fun loadScoutGrid() {
