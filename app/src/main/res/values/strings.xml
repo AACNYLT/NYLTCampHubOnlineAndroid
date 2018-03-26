@@ -37,6 +37,9 @@
     <string name="iselevated">Is Senior Staff</string>
     <string name="coursename">Course Name</string>
     <string name="lastmodified">Last Modified</string>
+    <string name="lastmodified_formatted">Last Modified %s1</string>
     <string name="created">Created</string>
+    <string name="created_formatted">Created %s1</string>
     <string name="server">Server</string>
+    <string name="courseid">Course ID</string>
 </resources>

@@ -26,6 +26,7 @@ class Scout(
         var IsStaff: Boolean?,
         var IsElevated: Boolean?,
         var CourseName: String?,
+        var CourseID: Int?,
         var LastModified: Date?,
         var Created: Date?
 ): Serializable {
