@@ -1,12 +1,24 @@
 package org.aacnylt.camphubonline
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.CoordinatorLayout
+import android.support.design.widget.FloatingActionButton
+import android.support.design.widget.Snackbar
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.widget.EditText
 import android.widget.Switch
 import android.widget.TextView
+import android.widget.Toast
+import org.aacnylt.camphubonline.models.Evaluation
+import org.aacnylt.camphubonline.models.Message
 import org.aacnylt.camphubonline.models.Scout
+import org.aacnylt.camphubonline.utils.StaticScoutService
+import org.aacnylt.camphubonline.utils.StaticScoutService.createRetrofitService
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ScoutEditActivity : AppCompatActivity() {
 
@@ -20,6 +32,23 @@ class ScoutEditActivity : AppCompatActivity() {
         toolbar.title = currentScout.toString()
         setSupportActionBar(toolbar)
         populateFields()
+        findViewById<FloatingActionButton>(R.id.ScoutEditSave).setOnClickListener {
+            val progressDialog = StaticScoutService.createProgressDialog(this@ScoutEditActivity, "Saving...")
+            progressDialog.show()
+            scrapeFields()
+            createRetrofitService().updateScout(currentScout.ScoutID, currentScout).enqueue(object : Callback<Message> {
+                override fun onResponse(call: Call<Message>, response: Response<Message>) {
+                    progressDialog.hide()
+                    Snackbar.make(findViewById<CoordinatorLayout>(R.id.ScoutEditContainer), response.body().toString(), Snackbar.LENGTH_LONG).show()
+                }
+
+                override fun onFailure(call: Call<Message>, t: Throwable) {
+                    progressDialog.hide()
+                    Log.e("getFailure", t.message, t)
+                    Snackbar.make(findViewById<CoordinatorLayout>(R.id.ScoutEditContainer), t.toString(), Snackbar.LENGTH_LONG).show()
+                }
+            })
+        }
     }
 
     private fun populateFields() {
@@ -43,8 +72,20 @@ class ScoutEditActivity : AppCompatActivity() {
     }
 
     private fun scrapeFields() {
-        scrapeStringField("FirstName", currentScout.FirstName, R.id.ScoutEditFirstName)
-        scrapeStringField("LastName", currentScout.LastName, R.id.ScoutEditLastName)
+        scrapeStringField("FirstName", R.id.ScoutEditFirstName)
+        scrapeStringField("LastName", R.id.ScoutEditLastName)
+        scrapeIntField("CourseID", R.id.ScoutEditCourseID)
+        scrapeIntField("BSAID", R.id.ScoutEditBSAID)
+        scrapeStringField("CourseName", R.id.ScoutEditCourseName)
+        scrapeStringField("Gender", R.id.ScoutEditGender)
+        scrapeStringField("Position", R.id.ScoutEditPosition)
+        scrapeStringField("Password", R.id.ScoutEditPwd)
+        scrapeStringField("Team", R.id.ScoutEditTeam)
+        scrapeStringField("Username", R.id.ScoutEditUsername)
+        scrapeBooleanField("IsAdmin", R.id.ScoutEditIsAdmin)
+        scrapeBooleanField("IsElevated", R.id.ScoutEditIsElevated)
+        scrapeBooleanField("IsStaff", R.id.ScoutEditIsStaff)
+        scrapeBooleanField("IsYouth", R.id.ScoutEditIsYouth)
     }
 
     private fun checkUnchangedNull(property: Any?, field: EditText): Boolean {
@@ -55,7 +96,8 @@ class ScoutEditActivity : AppCompatActivity() {
         return (property == null) && (!field.isChecked)
     }
 
-    private fun scrapeStringField(propertyName: String, propertyValue: String?, fieldName: Int) {
+    private fun scrapeStringField(propertyName: String, fieldName: Int) {
+        val propertyValue = currentScout.getStringProperty(propertyName)
         val field = findViewById<EditText>(fieldName)
         val fieldValue = field.text.toString()
         if (!checkUnchangedNull(propertyValue, field)) {
@@ -72,7 +114,8 @@ class ScoutEditActivity : AppCompatActivity() {
         }
     }
 
-    private fun scrapeIntField(propertyName: String, propertyValue: Int?, fieldName: Int) {
+    private fun scrapeIntField(propertyName: String, fieldName: Int) {
+        val propertyValue = currentScout.getIntProperty(propertyName)
         val field = findViewById<EditText>(fieldName)
         val fieldValue = field.text.toString().toInt()
         if (!checkUnchangedNull(propertyValue, field)) {
@@ -84,7 +127,8 @@ class ScoutEditActivity : AppCompatActivity() {
         }
     }
 
-    private fun scrapeBooleanField(propertyName: String, propertyValue: Boolean?, fieldName: Int) {
+    private fun scrapeBooleanField(propertyName: String, fieldName: Int) {
+        val propertyValue = currentScout.getBooleanProperty(propertyName)
         val field = findViewById<Switch>(fieldName)
         val fieldValue = field.isChecked
         if (!checkUnchangedNullBool(propertyValue, field)) {

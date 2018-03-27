@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/ScoutEditContainer"
     tools:context="org.aacnylt.camphubonline.ScoutEditActivity">
 
     <RelativeLayout
@@ -65,19 +66,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
                         android:hint="@string/gender" />
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:id="@+id/ScoutEditScoutID"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:hint="@string/scoutid"
-                        android:inputType="none" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -227,6 +215,14 @@
                 </HorizontalScrollView>
 
                 <TextView
+                    android:id="@+id/ScoutEditScoutID"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginStart="5dp" />
+
+                <TextView
                     android:id="@+id/ScoutEditLastModified"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -255,5 +251,6 @@
         android:focusable="true"
         android:src="@drawable/ic_save"
         app:backgroundTint="@color/colorAccent"
+        android:id="@+id/ScoutEditSave"
         app:fabSize="normal" />
 </android.support.design.widget.CoordinatorLayout>

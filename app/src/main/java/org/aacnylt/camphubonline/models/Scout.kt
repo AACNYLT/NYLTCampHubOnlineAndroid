@@ -29,7 +29,7 @@ class Scout(
         var CourseID: Int?,
         var LastModified: Date?,
         var Created: Date?
-): Serializable {
+) : Serializable {
     override fun toString(): String {
         return FirstName + " " + LastName
     }
@@ -40,5 +40,38 @@ class Scout(
                 .appendPath(ScoutID.toString())
                 .appendPath("image")
                 .build().toString()
+    }
+
+    fun getStringProperty(propertyName: String): String? {
+        when (propertyName) {
+            "FirstName" -> return FirstName
+            "LastName" -> return LastName
+            "CourseName" -> return CourseName
+            "Gender" -> return Gender
+            "Position" -> return Position
+            "Password" -> return Password
+            "Team" -> return Team
+            "Username" -> return Username
+        }
+        return null
+    }
+
+    fun getIntProperty(propertyName: String): Int? {
+        when (propertyName) {
+            "CourseID" -> return CourseID
+            "ScoutID" -> return ScoutID
+            "BSAID" -> return BSAID
+        }
+        return null
+    }
+
+    fun getBooleanProperty(propertyName: String): Boolean? {
+        when (propertyName) {
+            "IsAdmin" -> return IsAdmin
+            "IsStaff" -> return IsStaff
+            "IsElevated" -> return IsElevated
+            "IsYouth" -> return IsYouth
+        }
+        return null
     }
 }
