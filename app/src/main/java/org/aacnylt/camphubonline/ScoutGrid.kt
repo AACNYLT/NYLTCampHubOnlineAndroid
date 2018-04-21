@@ -28,6 +28,7 @@ class ScoutGrid : AppCompatActivity() {
         setContentView(R.layout.activity_scout_grid)
         setSupportActionBar(findViewById(R.id.mainbar))
         (findViewById<SwipeRefreshLayout>(R.id.ScoutGridSwipeContainer)).setOnRefreshListener { loadScoutGrid() }
+        (findViewById<SwipeRefreshLayout>(R.id.ScoutGridSwipeContainer)).setColorSchemeResources(R.color.colorAccent)
         val scoutGridView = findViewById<ListView>(R.id.ScoutGrid)
         scoutGridView.setOnItemClickListener { _, _, position, _ ->
             val selectedScout = scoutGridView.getItemAtPosition(position) as Scout
@@ -35,18 +36,20 @@ class ScoutGrid : AppCompatActivity() {
             intent.putExtra("scout", selectedScout)
             startActivity(intent)
         }
-        scoutGridView.setOnItemLongClickListener { _, view, position, _ ->
-            val selectedScout = scoutGridView.getItemAtPosition(position) as Scout
-            val contextMenu = PopupMenu(this, view)
-            contextMenu.menuInflater.inflate(R.menu.scoutcontextmenu, contextMenu.menu)
-            contextMenu.setOnMenuItemClickListener {
-                when (it.itemId) {
-                    R.id.ScoutContextEdit -> launchEditProfile(selectedScout)
+        if (CurrentUser.IsAdmin == true) {
+            scoutGridView.setOnItemLongClickListener { _, view, position, _ ->
+                val selectedScout = scoutGridView.getItemAtPosition(position) as Scout
+                val contextMenu = PopupMenu(this, view)
+                contextMenu.menuInflater.inflate(R.menu.scoutcontextmenu, contextMenu.menu)
+                contextMenu.setOnMenuItemClickListener {
+                    when (it.itemId) {
+                        R.id.ScoutContextEdit -> launchEditProfile(selectedScout)
+                    }
+                    true
                 }
+                contextMenu.show()
                 true
             }
-            contextMenu.show()
-            true
         }
         loadScoutGrid()
     }

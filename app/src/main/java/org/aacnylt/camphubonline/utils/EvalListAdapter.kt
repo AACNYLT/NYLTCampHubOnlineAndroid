@@ -9,6 +9,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import org.aacnylt.camphubonline.R
 import org.aacnylt.camphubonline.models.Evaluation
+import org.aacnylt.camphubonline.models.Scout
 import org.aacnylt.camphubonline.utils.StaticScoutService.CurrentUser
 import java.text.SimpleDateFormat
 import java.util.*
@@ -16,7 +17,7 @@ import java.util.*
 /**
  * Created by Aroon on 3/11/2018.
  */
-class EvalListAdapter(private val evalList: ArrayList<Evaluation>, private val context: Context, private val clickListener: (Evaluation) -> Unit, private val longPressListener: (Evaluation, View) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class EvalListAdapter(private val evalList: ArrayList<Evaluation>, private val scout: Scout, private val context: Context, private val clickListener: (Evaluation) -> Unit, private val longPressListener: (Evaluation, View) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     class ItemViewHolder(val view: View) : RecyclerView.ViewHolder(view)
     class HeaderViewHolder(val view: View) : RecyclerView.ViewHolder(view)
 
@@ -55,7 +56,8 @@ class EvalListAdapter(private val evalList: ArrayList<Evaluation>, private val c
             holder.view.setOnClickListener { clickListener(eval) }
             holder.view.setOnLongClickListener { longPressListener(eval, holder.view); true }
         } else if (holder is HeaderViewHolder) {
-
+            holder.view.findViewById<TextView>(R.id.EvalHeaderTeam).text = scout.Team ?: ""
+            holder.view.findViewById<TextView>(R.id.EvalHeaderPosition).text = scout.Position ?: ""
         }
     }
 

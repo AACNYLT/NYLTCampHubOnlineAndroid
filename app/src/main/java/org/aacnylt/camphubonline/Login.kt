@@ -74,6 +74,8 @@ class Login : AppCompatActivity() {
         if (usernameField.text.isNotEmpty() && passwordField.text.isNotEmpty() && serverField.text.isNotEmpty()) {
             (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(currentFocus.windowToken, 0)
             val progressDialog = createProgressDialog(this@Login, "Logging in...")
+            progressDialog.setCanceledOnTouchOutside(false)
+
             progressDialog.show()
             StaticScoutService.hostUrl = formatServerURL(serverField.text.toString())
             createRetrofitService().authenticateScout(usernameField.text.toString(), passwordField.text.toString())

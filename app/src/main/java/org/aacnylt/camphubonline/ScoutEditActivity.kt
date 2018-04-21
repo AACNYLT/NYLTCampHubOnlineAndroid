@@ -5,13 +5,12 @@ import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.AppCompatTextView
 import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.widget.EditText
 import android.widget.Switch
 import android.widget.TextView
-import android.widget.Toast
-import org.aacnylt.camphubonline.models.Evaluation
 import org.aacnylt.camphubonline.models.Message
 import org.aacnylt.camphubonline.models.Scout
 import org.aacnylt.camphubonline.utils.StaticScoutService
@@ -55,7 +54,7 @@ class ScoutEditActivity : AppCompatActivity() {
         findViewById<EditText>(R.id.ScoutEditFirstName).setText(currentScout.FirstName)
         findViewById<EditText>(R.id.ScoutEditLastName).setText(currentScout.LastName)
         findViewById<EditText>(R.id.ScoutEditCourseID).setText(currentScout.CourseID.toString())
-        findViewById<EditText>(R.id.ScoutEditScoutID).setText(currentScout.ScoutID.toString())
+        findViewById<TextView>(R.id.ScoutEditScoutID).setText(currentScout.ScoutID.toString())
         findViewById<EditText>(R.id.ScoutEditBSAID).setText(currentScout.BSAID.toString())
         findViewById<EditText>(R.id.ScoutEditCourseName).setText(currentScout.CourseName)
         findViewById<EditText>(R.id.ScoutEditGender).setText(currentScout.Gender)

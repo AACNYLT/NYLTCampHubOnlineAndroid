@@ -42,6 +42,7 @@ class ScoutActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         (findViewById<SwipeRefreshLayout>(R.id.EvalListContainer)).setOnRefreshListener { loadEvalList() }
+        (findViewById<SwipeRefreshLayout>(R.id.EvalListContainer)).setColorSchemeResources(R.color.colorAccent)
         val scoutImage = findViewById<ImageView>(R.id.ScoutImage)
         Picasso.with(this).load(currentScout.imageUrl()).into(scoutImage)
         loadEvalList()
@@ -93,7 +94,7 @@ class ScoutActivity : AppCompatActivity() {
 
     private fun setEvalList(list: ArrayList<Evaluation>) {
         val viewManager = LinearLayoutManager(this)
-        val viewAdapter = EvalListAdapter(list, this, {
+        val viewAdapter = EvalListAdapter(list, currentScout,this, {
             launchCommentModal(it)
         }, { evaluation, view -> launchEvalContextMenu(evaluation, view) })
         findViewById<RecyclerView>(R.id.EvalList).apply {
@@ -127,6 +128,11 @@ class ScoutActivity : AppCompatActivity() {
         }
         if (CurrentUser.IsAdmin != true) {
             contextMenu.menu.findItem(R.id.EvalContextDelete).isVisible = false
+        }
+        contextMenu.setOnMenuItemClickListener {
+            when (it.itemId) {
+
+            }
         }
         contextMenu.show()
     }
