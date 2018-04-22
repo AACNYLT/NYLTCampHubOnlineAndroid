@@ -16,6 +16,12 @@
     <string name="confidence">confidence</string>
     <string name="motivation">motivation</string>
     <string name="enthusiasm">enthusiasm</string>
+    <string name="knowledgeCaps">Knowledge</string>
+    <string name="skillCaps">Skill</string>
+    <string name="confidenceCaps">Confidence</string>
+    <string name="motivationCaps">Motivation</string>
+    <string name="enthusiasmCaps">Enthusiasm</string>
+    <string name="commentsCaps">Comments</string>
     <string name="eval_comments_header">Comments by %s1</string>
     <string name="eval_comments_header_preload">Comments</string>
     <string name="edit_profile">Edit Profile</string>
@@ -42,4 +48,5 @@
     <string name="created_formatted">Created %s1</string>
     <string name="server">Server</string>
     <string name="courseid">Course ID</string>
+    <string name="save">Save</string>
 </resources>

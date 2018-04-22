@@ -1,9 +1,11 @@
 package org.aacnylt.camphubonline
 
 import android.app.AlertDialog
+import android.app.DialogFragment
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.NavUtils
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
@@ -41,8 +43,13 @@ class ScoutActivity : AppCompatActivity() {
         toolbar.title = currentScout.toString()
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        (findViewById<SwipeRefreshLayout>(R.id.EvalListContainer)).setOnRefreshListener { loadEvalList() }
-        (findViewById<SwipeRefreshLayout>(R.id.EvalListContainer)).setColorSchemeResources(R.color.colorAccent)
+        findViewById<SwipeRefreshLayout>(R.id.EvalListContainer).setOnRefreshListener { loadEvalList() }
+        findViewById<SwipeRefreshLayout>(R.id.EvalListContainer).setColorSchemeResources(R.color.colorAccent)
+        findViewById<FloatingActionButton>(R.id.AddEval).setOnClickListener {
+            val eval = EvaluationFragment()
+            eval.isCancelable = false
+            eval.show(fragmentManager, "fragment_evaluation")
+        }
         val scoutImage = findViewById<ImageView>(R.id.ScoutImage)
         Picasso.with(this).load(currentScout.imageUrl()).into(scoutImage)
         loadEvalList()
@@ -94,7 +101,7 @@ class ScoutActivity : AppCompatActivity() {
 
     private fun setEvalList(list: ArrayList<Evaluation>) {
         val viewManager = LinearLayoutManager(this)
-        val viewAdapter = EvalListAdapter(list, currentScout,this, {
+        val viewAdapter = EvalListAdapter(list, currentScout, this, {
             launchCommentModal(it)
         }, { evaluation, view -> launchEvalContextMenu(evaluation, view) })
         findViewById<RecyclerView>(R.id.EvalList).apply {

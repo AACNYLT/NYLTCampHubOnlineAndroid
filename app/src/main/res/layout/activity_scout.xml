@@ -67,6 +67,7 @@
         android:focusable="true"
         android:src="@drawable/ic_add"
         app:backgroundTint="@color/colorAccent"
+        android:id="@+id/AddEval"
         app:fabSize="normal" />
 
 </android.support.design.widget.CoordinatorLayout>

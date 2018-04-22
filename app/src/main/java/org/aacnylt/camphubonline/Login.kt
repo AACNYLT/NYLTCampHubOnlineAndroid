@@ -5,14 +5,14 @@ import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Point
 import android.os.Bundle
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.CardView
 import android.support.v7.widget.Toolbar
-import android.view.KeyEvent
-import android.view.Menu
-import android.view.MenuItem
+import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import org.aacnylt.camphubonline.utils.StaticScoutService.createProgressDialog
@@ -39,9 +39,9 @@ class Login : AppCompatActivity() {
         val serverField = findViewById<AutoCompleteTextView>(R.id.server)
         val serverListAdapter = ArrayAdapter<String>(this@Login, android.R.layout.simple_list_item_1, serverList.toList())
         serverField.setAdapter(serverListAdapter)
-        loginButton.setOnClickListener  {
-                startLogin(usernameField, passwordField, serverField)
-            }
+        loginButton.setOnClickListener {
+            startLogin(usernameField, passwordField, serverField)
+        }
         serverField.setImeActionLabel(getString(R.string.login), KeyEvent.KEYCODE_ENTER)
         serverField.setOnEditorActionListener(object : TextView.OnEditorActionListener {
             override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
@@ -75,7 +75,7 @@ class Login : AppCompatActivity() {
             (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(currentFocus.windowToken, 0)
             val progressDialog = createProgressDialog(this@Login, "Logging in...")
             progressDialog.setCanceledOnTouchOutside(false)
-
+            progressDialog.setCancelable(false)
             progressDialog.show()
             StaticScoutService.hostUrl = formatServerURL(serverField.text.toString())
             createRetrofitService().authenticateScout(usernameField.text.toString(), passwordField.text.toString())
@@ -114,7 +114,7 @@ class Login : AppCompatActivity() {
 
     fun saveServerAddress(url: String) {
         serverList.add(url)
-        val prefs = this.getSharedPreferences("campHubServers",Context.MODE_PRIVATE) ?: return
+        val prefs = this.getSharedPreferences("campHubServers", Context.MODE_PRIVATE) ?: return
         with(prefs.edit()) {
             putStringSet("serverlist", serverList)
             commit()
@@ -122,7 +122,7 @@ class Login : AppCompatActivity() {
     }
 
     fun loadServerAddress() {
-        val prefs = this.getSharedPreferences("campHubServers",Context.MODE_PRIVATE) ?: return
+        val prefs = this.getSharedPreferences("campHubServers", Context.MODE_PRIVATE) ?: return
         serverList = prefs.getStringSet("serverlist", HashSet<String>()) as HashSet<String>
     }
 }
