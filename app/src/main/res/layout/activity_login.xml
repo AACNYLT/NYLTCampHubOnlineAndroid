@@ -50,6 +50,7 @@
                 android:layout_height="wrap_content"
                 android:completionThreshold="0"
                 android:hint="@string/server"
+                android:visibility="gone"
                 android:inputType="textUri" />
 
             <Button

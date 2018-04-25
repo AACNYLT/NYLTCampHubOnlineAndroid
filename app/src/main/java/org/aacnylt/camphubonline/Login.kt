@@ -27,6 +27,8 @@ class Login : AppCompatActivity() {
 
     lateinit var loginContainer: CoordinatorLayout
 
+    var useCustomServer = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -66,18 +68,22 @@ class Login : AppCompatActivity() {
                 builder.setMessage("NYLT CampHub Online by Aroon Narayanan - Version " + version)
                 builder.create().show()
             }
+            R.id.logincustomserver -> {
+                useCustomServer = true
+                findViewById<EditText>(R.id.server).visibility = EditText.VISIBLE
+            }
         }
         return true
     }
 
     private fun startLogin(usernameField: EditText, passwordField: EditText, serverField: AutoCompleteTextView) {
-        if (usernameField.text.isNotEmpty() && passwordField.text.isNotEmpty() && serverField.text.isNotEmpty()) {
+        if (usernameField.text.isNotEmpty() && passwordField.text.isNotEmpty()) {
             (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(currentFocus.windowToken, 0)
             val progressDialog = createProgressDialog(this@Login, "Logging in...")
             progressDialog.setCanceledOnTouchOutside(false)
             progressDialog.setCancelable(false)
             progressDialog.show()
-            StaticScoutService.hostUrl = formatServerURL(serverField.text.toString())
+            StaticScoutService.hostUrl = if (useCustomServer) formatServerURL(serverField.text.toString()) else "http://nyltcamphub.azurewebsites.net"
             createRetrofitService().authenticateScout(usernameField.text.toString(), passwordField.text.toString())
                     .enqueue(createCallback(progressDialog))
         }
