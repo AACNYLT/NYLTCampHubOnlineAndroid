@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.Toast
+import com.github.chrisbanes.photoview.PhotoView
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_scout.*
 import org.aacnylt.camphubonline.models.Evaluation
@@ -52,6 +53,7 @@ class ScoutActivity : AppCompatActivity() {
         }
         val scoutImage = findViewById<ImageView>(R.id.ScoutImage)
         Picasso.with(this).load(currentScout.imageUrl()).into(scoutImage)
+        scoutImage.setOnClickListener { launchImageWindow() }
         loadEvalList()
     }
 
@@ -70,6 +72,13 @@ class ScoutActivity : AppCompatActivity() {
             android.R.id.home -> NavUtils.navigateUpFromSameTask(this@ScoutActivity)
         }
         return true
+    }
+
+    fun launchImageWindow() {
+        val builder = AlertDialog.Builder(this)
+        val view = layoutInflater.inflate(R.layout.photo_dialog, null)
+        Picasso.with(this).load(currentScout.imageUrl()).into(view.findViewById(R.id.PhotoDialogView) as PhotoView)
+        builder.setView(view).create().show()
     }
 
     fun launchEditProfile() {

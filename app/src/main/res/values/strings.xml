@@ -22,6 +22,7 @@
     <string name="motivationCaps">Motivation</string>
     <string name="enthusiasmCaps">Enthusiasm</string>
     <string name="commentsCaps">Comments</string>
+    <string name="recommendCaps">Recommend for Staff</string>
     <string name="eval_comments_header">Comments by %s1</string>
     <string name="eval_comments_header_preload">Comments</string>
     <string name="edit_profile">Edit Profile</string>
@@ -49,5 +50,8 @@
     <string name="server">Server</string>
     <string name="courseid">Course ID</string>
     <string name="save">Save</string>
+    <string name="yes">Yes</string>
+    <string name="maybe">Maybe</string>
+    <string name="no">No</string>
     <string name="custom_server">Custom Server</string>
 </resources>

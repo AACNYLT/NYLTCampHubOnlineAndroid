@@ -3,5 +3,5 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:title="@string/about" android:id="@+id/loginabout" app:showAsAction="always" android:icon="@drawable/ic_help" />
-<item android:title="@string/custom_server" android:id="@+id/logincustomserver" />
+<item android:title="@string/custom_server" android:checkable="true" android:id="@+id/logincustomserver" />
 </menu>

@@ -19,7 +19,7 @@ class EvaluationFragment : DialogFragment() {
         super.onResume()
         val size = Point()
         dialog.window.windowManager.defaultDisplay.getSize(size)
-        var width = (size.x * 0.75).toInt()
+        var width = (size.x * 0.8).toInt()
         width = if (width < 300) 300 else width
         dialog.window.setLayout(width, WindowManager.LayoutParams.WRAP_CONTENT)
     }

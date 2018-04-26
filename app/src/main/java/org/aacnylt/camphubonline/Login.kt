@@ -51,6 +51,12 @@ class Login : AppCompatActivity() {
                 return true
             }
         })
+        passwordField.setOnEditorActionListener(object : TextView.OnEditorActionListener {
+            override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+                startLogin(usernameField, passwordField, serverField)
+                return true
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -69,15 +75,16 @@ class Login : AppCompatActivity() {
                 builder.create().show()
             }
             R.id.logincustomserver -> {
-                useCustomServer = true
-                findViewById<EditText>(R.id.server).visibility = EditText.VISIBLE
+                useCustomServer = !useCustomServer
+                item.isChecked = useCustomServer
+                findViewById<EditText>(R.id.server).visibility = if(useCustomServer) EditText.VISIBLE else EditText.GONE
             }
         }
         return true
     }
 
     private fun startLogin(usernameField: EditText, passwordField: EditText, serverField: AutoCompleteTextView) {
-        if (usernameField.text.isNotEmpty() && passwordField.text.isNotEmpty()) {
+        if (usernameField.text.isNotEmpty() && passwordField.text.isNotEmpty() && checkServerFieldEmptiness(serverField)) {
             (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(currentFocus.windowToken, 0)
             val progressDialog = createProgressDialog(this@Login, "Logging in...")
             progressDialog.setCanceledOnTouchOutside(false)
@@ -86,6 +93,14 @@ class Login : AppCompatActivity() {
             StaticScoutService.hostUrl = if (useCustomServer) formatServerURL(serverField.text.toString()) else "http://nyltcamphub.azurewebsites.net"
             createRetrofitService().authenticateScout(usernameField.text.toString(), passwordField.text.toString())
                     .enqueue(createCallback(progressDialog))
+        }
+    }
+
+    private fun checkServerFieldEmptiness(serverField: AutoCompleteTextView): Boolean {
+        if (useCustomServer) {
+            return serverField.text.isNotEmpty()
+        } else {
+            return true
         }
     }
 
@@ -105,13 +120,13 @@ class Login : AppCompatActivity() {
                     val intent = Intent(this@Login, ScoutGrid::class.java)
                     startActivity(intent)
                 } else {
-                    Snackbar.make(loginContainer, "Incorrect username or password.", Snackbar.LENGTH_INDEFINITE).show()
+                    Snackbar.make(loginContainer, "Incorrect username or password.", Snackbar.LENGTH_LONG).show()
                 }
             }
 
             override fun onFailure(call: Call<Scout>, t: Throwable) {
                 progressDialog.dismiss()
-                Snackbar.make(loginContainer, "Unable to reach CampHub server - check your internet connection.", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(loginContainer, "Unable to reach CampHub server - check your internet connection and try again.", Snackbar.LENGTH_LONG).show()
             }
         }
     }
