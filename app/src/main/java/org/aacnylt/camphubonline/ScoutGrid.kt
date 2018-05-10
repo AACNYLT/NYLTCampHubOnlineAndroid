@@ -11,8 +11,10 @@ import android.view.MenuItem
 import android.widget.ListView
 import android.widget.PopupMenu
 import android.widget.Toast
+import org.aacnylt.camphubonline.models.Course
 import org.aacnylt.camphubonline.models.Scout
 import org.aacnylt.camphubonline.utils.ScoutGridAdapter
+import org.aacnylt.camphubonline.utils.StaticScoutService
 import org.aacnylt.camphubonline.utils.StaticScoutService.CurrentUser
 import org.aacnylt.camphubonline.utils.StaticScoutService.createRetrofitService
 import retrofit2.Call
@@ -62,7 +64,7 @@ class ScoutGrid : AppCompatActivity() {
 
     fun loadScoutGrid() {
         (findViewById<SwipeRefreshLayout>(R.id.ScoutGridSwipeContainer)).isRefreshing = true
-        createRetrofitService().allScouts.enqueue(createCallback())
+        createRetrofitService().courses.enqueue(createCourseCallback())
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -133,25 +135,51 @@ class ScoutGrid : AppCompatActivity() {
 //        setContentView(R.layout.activity_scout_grid)
 //    }
 
+    private fun createCourseCallback(): Callback<ArrayList<Course>> {
+        return object : Callback<ArrayList<Course>> {
+            override fun onResponse(call: Call<ArrayList<Course>>, response: Response<ArrayList<Course>>) {
+                StaticScoutService.CourseList = response.body()!!
+                createRetrofitService().allScouts.enqueue(createCallback())
+            }
+
+            override fun onFailure(call: Call<ArrayList<Course>>, t: Throwable) {
+                handleFailure(t)
+            }
+        }
+    }
+
     private fun createCallback(): Callback<ArrayList<Scout>> {
         return object : Callback<ArrayList<Scout>> {
             override fun onResponse(call: Call<ArrayList<Scout>>, response: Response<ArrayList<Scout>>) {
-                mainScoutList = removeSelf(response.body()!!)
+                mainScoutList = filterCourses(removeSelf(response.body()!!))
                 setScoutGrid(mainScoutList)
                 (findViewById<SwipeRefreshLayout>(R.id.ScoutGridSwipeContainer)).isRefreshing = false
             }
 
             override fun onFailure(call: Call<ArrayList<Scout>>, t: Throwable) {
-                Log.e("getFailure", t.message, t)
-                (findViewById<SwipeRefreshLayout>(R.id.ScoutGridSwipeContainer)).isRefreshing = false
-                Toast.makeText(applicationContext, t.toString(), Toast.LENGTH_LONG).show()
+                handleFailure(t)
             }
         }
+    }
+
+    private fun handleFailure(t: Throwable) {
+        Log.e("getFailure", t.message, t)
+        (findViewById<SwipeRefreshLayout>(R.id.ScoutGridSwipeContainer)).isRefreshing = false
+        Toast.makeText(applicationContext, t.toString(), Toast.LENGTH_LONG).show()
     }
 
     private fun removeSelf(scoutList: ArrayList<Scout>): ArrayList<Scout> {
         if (CurrentUser.IsAdmin != true) {
             scoutList.removeAt(scoutList.indexOfFirst { scout -> scout.ScoutID == CurrentUser.ScoutID })
+        }
+        return scoutList
+    }
+
+    private fun filterCourses(scoutList: ArrayList<Scout>): ArrayList<Scout> {
+        if (CurrentUser.IsAdmin != true) {
+            scoutList.filter {
+                it.CourseID == CurrentUser.CourseID
+            }
         }
         return scoutList
     }

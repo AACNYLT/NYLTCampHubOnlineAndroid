@@ -2,6 +2,7 @@ package org.aacnylt.camphubonline.utils
 
 import android.app.ProgressDialog
 import android.content.Context
+import org.aacnylt.camphubonline.models.Course
 import org.aacnylt.camphubonline.models.Scout
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -22,6 +23,8 @@ internal object StaticScoutService {
     var hostUrl = ""
 
     lateinit var CurrentUser: Scout
+
+    lateinit var CourseList: ArrayList<Course>
 
     fun createProgressDialog(context: Context, message: String): ProgressDialog {
         val progressDialog = ProgressDialog(context)

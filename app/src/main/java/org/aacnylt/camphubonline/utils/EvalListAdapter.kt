@@ -40,24 +40,32 @@ class EvalListAdapter(private val evalList: ArrayList<Evaluation>, private val s
         if (holder is ItemViewHolder) {
             val eval = evalList[position - 1]
             val df = SimpleDateFormat("MM/dd/yyyy HH:mm a", Locale.US)
-            holder.view.findViewById<TextView>(R.id.EvalItemHeader).text = context.getString(R.string.eval_header).replace("%s1", eval.Day ?: "").replace("%s2", eval.EvaluatorPosition ?: "")
+            holder.view.findViewById<TextView>(R.id.EvalItemHeader).text = context.getString(R.string.eval_header).replace("%s1", eval.Day
+                    ?: "").replace("%s2", eval.EvaluatorPosition ?: "")
             if (eval.Created != null) {
                 holder.view.findViewById<TextView>(R.id.EvalItemTime).text = df.format(eval.Created)
             }
             if (eval.EvaluatorID == CurrentUser.ScoutID) {
                 holder.view.findViewById<TextView>(R.id.EvalItemCommentLabel).text = context.getString(R.string.hold_edit)
             }
-            holder.view.findViewById<ProgressBar>(R.id.KnowledgeItem).progress = ((eval.Knowledge ?: 0.0) * 20).toInt()
-            holder.view.findViewById<ProgressBar>(R.id.SkillItem).progress = ((eval.Skill ?: 0.0) * 20).toInt()
-            holder.view.findViewById<ProgressBar>(R.id.ConfidenceItem).progress = ((eval.Confidence ?: 0.0) * 20).toInt()
-            holder.view.findViewById<ProgressBar>(R.id.MotivationItem).progress = ((eval.Motivation ?: 0.0) * 20).toInt()
-            holder.view.findViewById<ProgressBar>(R.id.EnthusiamItem).progress = ((eval.Enthusiasm ?: 0.0) * 20).toInt()
+            holder.view.findViewById<ProgressBar>(R.id.KnowledgeItem).progress = ((eval.Knowledge
+                    ?: 0.0) * 20).toInt()
+            holder.view.findViewById<ProgressBar>(R.id.SkillItem).progress = ((eval.Skill
+                    ?: 0.0) * 20).toInt()
+            holder.view.findViewById<ProgressBar>(R.id.ConfidenceItem).progress = ((eval.Confidence
+                    ?: 0.0) * 20).toInt()
+            holder.view.findViewById<ProgressBar>(R.id.MotivationItem).progress = ((eval.Motivation
+                    ?: 0.0) * 20).toInt()
+            holder.view.findViewById<ProgressBar>(R.id.EnthusiamItem).progress = ((eval.Enthusiasm
+                    ?: 0.0) * 20).toInt()
             holder.view.findViewById<TextView>(R.id.EvalItemRecommend).text = context.getString(R.string.eval_recommend).replace("%s1", getRecommendation(eval))
             holder.view.setOnClickListener { clickListener(eval) }
             holder.view.setOnLongClickListener { longPressListener(eval, holder.view); true }
         } else if (holder is HeaderViewHolder) {
             holder.view.findViewById<TextView>(R.id.EvalHeaderTeam).text = scout.Team ?: ""
             holder.view.findViewById<TextView>(R.id.EvalHeaderPosition).text = scout.Position ?: ""
+            holder.view.findViewById<TextView>(R.id.EvalHeaderCourse).text = StaticScoutService.CourseList.firstOrNull { it.CourseID == scout.CourseID }?.UnitName
+                    ?: scout.CourseID.toString()
         }
     }
 

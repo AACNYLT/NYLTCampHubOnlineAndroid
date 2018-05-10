@@ -31,6 +31,7 @@ class ScoutGridAdapter(context: Context, list: ArrayList<Scout>) : ArrayAdapter<
         val scoutName = listItem.findViewById<TextView>(R.id.ScoutItemName)
         val scoutTeam = listItem.findViewById<TextView>(R.id.ScoutItemTeam)
         val scoutPosition = listItem.findViewById<TextView>(R.id.ScoutItemPosition)
+        val scoutCourse = listItem.findViewById<TextView>(R.id.ScoutItemCourse)
 
         Picasso.with(localContext).load(currentScout.imageUrl()).into(scoutImage)
         scoutName.text = currentScout.toString()
@@ -41,7 +42,8 @@ class ScoutGridAdapter(context: Context, list: ArrayList<Scout>) : ArrayAdapter<
         } else {
             scoutPosition.setTextColor(scoutTeam.currentTextColor)
         }
-
+        scoutCourse.text = StaticScoutService.CourseList.firstOrNull { it.CourseID == currentScout.CourseID }?.UnitName
+                ?: currentScout.CourseID.toString()
         return listItem
     }
 

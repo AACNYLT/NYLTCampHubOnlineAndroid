@@ -8,7 +8,7 @@ import java.util.*
 class Course(
         var UnitName: String?,
         var CourseID: Int?,
-        var StartDate: Date?
+        var StartDate: String?
 ) {
     override fun toString(): String {
         return UnitName ?: ""
