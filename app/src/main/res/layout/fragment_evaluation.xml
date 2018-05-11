@@ -9,13 +9,44 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="@string/knowledgeCaps"
-            android:textColor="@android:color/primary_text_light"
-            android:textSize="16sp" />
+            android:layout_marginBottom="10dp">
+
+            <EditText
+                android:id="@+id/EvalFragDay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/dayCaps" />
+        </android.support.design.widget.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/knowledgeCaps"
+                android:textColor="@android:color/primary_text_light"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="@string/separator"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/EvalFragLabelKnowledge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:textSize="16sp" />
+        </LinearLayout>
 
         <SeekBar
 
@@ -25,13 +56,32 @@
             android:layout_marginBottom="10dp"
             android:max="8" />
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="@string/skillCaps"
-            android:textColor="@android:color/primary_text_light"
-            android:textSize="16sp" />
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/skillCaps"
+                android:textColor="@android:color/primary_text_light"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="@string/separator"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/EvalFragLabelSkill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:textSize="16sp" />
+        </LinearLayout>
 
         <SeekBar
             android:id="@+id/EvalFragSkill"
@@ -40,13 +90,32 @@
             android:layout_marginBottom="10dp"
             android:max="8" />
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="@string/confidenceCaps"
-            android:textColor="@android:color/primary_text_light"
-            android:textSize="16sp" />
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/confidenceCaps"
+                android:textColor="@android:color/primary_text_light"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="@string/separator"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/EvalFragLabelConfidence"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:textSize="16sp" />
+        </LinearLayout>
 
         <SeekBar
             android:id="@+id/EvalFragConfidence"
@@ -55,13 +124,32 @@
             android:layout_marginBottom="10dp"
             android:max="8" />
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="@string/motivationCaps"
-            android:textColor="@android:color/primary_text_light"
-            android:textSize="16sp" />
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/motivationCaps"
+                android:textColor="@android:color/primary_text_light"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="@string/separator"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/EvalFragLabelMotivation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:textSize="16sp" />
+        </LinearLayout>
 
         <SeekBar
             android:id="@+id/EvalFragMotivation"
@@ -70,13 +158,32 @@
             android:layout_marginBottom="10dp"
             android:max="8" />
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="@string/enthusiasmCaps"
-            android:textColor="@android:color/primary_text_light"
-            android:textSize="16sp" />
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/enthusiasmCaps"
+                android:textColor="@android:color/primary_text_light"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="@string/separator"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/EvalFragLabelEnthusiasm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:textSize="16sp" />
+        </LinearLayout>
 
         <SeekBar
             android:id="@+id/EvalFragEnthusiasm"
@@ -128,6 +235,7 @@
             android:layout_marginBottom="15dp">
 
             <EditText
+                android:id="@+id/EvalFragComments"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/commentsCaps" />

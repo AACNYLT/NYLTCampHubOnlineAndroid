@@ -37,24 +37,28 @@ class ScoutActivity : AppCompatActivity() {
     lateinit var currentScout: Scout
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_scout)
-        currentScout = intent.getSerializableExtra("scout") as Scout
-        val toolbar = findViewById<Toolbar>(R.id.ScoutToolbar)
-        toolbar.title = currentScout.toString()
-        setSupportActionBar(toolbar)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        findViewById<SwipeRefreshLayout>(R.id.EvalListContainer).setOnRefreshListener { loadEvalList() }
-        findViewById<SwipeRefreshLayout>(R.id.EvalListContainer).setColorSchemeResources(R.color.colorAccent)
-        findViewById<FloatingActionButton>(R.id.AddEval).setOnClickListener {
-            val eval = EvaluationFragment()
-            eval.isCancelable = false
-            eval.show(fragmentManager, "fragment_evaluation")
+        try {
+            super.onCreate(savedInstanceState)
+            setContentView(R.layout.activity_scout)
+            currentScout = intent.getSerializableExtra("scout") as Scout
+            val toolbar = findViewById<Toolbar>(R.id.ScoutToolbar)
+            toolbar.title = currentScout.toString()
+            setSupportActionBar(toolbar)
+            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+            findViewById<SwipeRefreshLayout>(R.id.EvalListContainer).setOnRefreshListener { loadEvalList() }
+            findViewById<SwipeRefreshLayout>(R.id.EvalListContainer).setColorSchemeResources(R.color.colorAccent)
+            findViewById<FloatingActionButton>(R.id.AddEval).setOnClickListener {
+                val eval = EvaluationFragment()
+                eval.isCancelable = false
+                eval.show(fragmentManager, "fragment_evaluation")
+            }
+            val scoutImage = findViewById<ImageView>(R.id.ScoutImage)
+            Picasso.with(this).load(currentScout.imageUrl()).into(scoutImage)
+            scoutImage.setOnClickListener { launchImageWindow() }
+            loadEvalList()
+        } catch (ex: Exception) {
+            startActivity(Intent(this@ScoutActivity, Login::class.java))
         }
-        val scoutImage = findViewById<ImageView>(R.id.ScoutImage)
-        Picasso.with(this).load(currentScout.imageUrl()).into(scoutImage)
-        scoutImage.setOnClickListener { launchImageWindow() }
-        loadEvalList()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

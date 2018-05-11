@@ -87,8 +87,6 @@ class Login : AppCompatActivity() {
         if (usernameField.text.isNotEmpty() && passwordField.text.isNotEmpty() && checkServerFieldEmptiness(serverField)) {
             (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(currentFocus.windowToken, 0)
             val progressDialog = createProgressDialog(this@Login, "Logging in...")
-            progressDialog.setCanceledOnTouchOutside(false)
-            progressDialog.setCancelable(false)
             progressDialog.show()
             StaticScoutService.hostUrl = if (useCustomServer) formatServerURL(serverField.text.toString()) else "http://nyltcamphub.azurewebsites.net"
             createRetrofitService().authenticateScout(usernameField.text.toString(), passwordField.text.toString())

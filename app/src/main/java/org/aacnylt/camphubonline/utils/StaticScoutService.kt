@@ -29,6 +29,8 @@ internal object StaticScoutService {
     fun createProgressDialog(context: Context, message: String): ProgressDialog {
         val progressDialog = ProgressDialog(context)
         progressDialog.isIndeterminate = true
+        progressDialog.setCanceledOnTouchOutside(false)
+        progressDialog.setCancelable(false)
         progressDialog.setMessage(message)
         return progressDialog
     }

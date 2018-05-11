@@ -22,6 +22,7 @@
     <string name="motivationCaps">Motivation</string>
     <string name="enthusiasmCaps">Enthusiasm</string>
     <string name="commentsCaps">Comments</string>
+    <string name="dayCaps">Day</string>
     <string name="recommendCaps">Recommend for Staff</string>
     <string name="eval_comments_header">Comments by %s1</string>
     <string name="eval_comments_header_preload">Comments</string>
