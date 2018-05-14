@@ -211,18 +211,21 @@
                 android:orientation="horizontal">
 
                 <RadioButton
+                    android:id="@+id/EvalFragYesRecommend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
                     android:text="@string/yes" />
 
                 <RadioButton
+                    android:id="@+id/EvalFragMaybeRecommend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
                     android:text="@string/maybe" />
 
                 <RadioButton
+                    android:id="@+id/EvalFragNoRecommend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/no" />

@@ -2,10 +2,12 @@ package org.aacnylt.camphubonline.utils
 
 import android.app.ProgressDialog
 import android.content.Context
+import android.provider.Settings
 import org.aacnylt.camphubonline.models.Course
 import org.aacnylt.camphubonline.models.Scout
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
 
 /**
  * Created by Aroon on 2/24/2018.
@@ -33,5 +35,10 @@ internal object StaticScoutService {
         progressDialog.setCancelable(false)
         progressDialog.setMessage(message)
         return progressDialog
+    }
+
+    fun createUniqueID(seed: String): String {
+        val uncleanString = UUID.randomUUID().toString() + seed + Calendar.getInstance().time.time.toString()
+        return uncleanString.replace("/", "").replace("?", "").replace("\\", "").replace("&", "").replace("=", "").replace("+", "")
     }
 }

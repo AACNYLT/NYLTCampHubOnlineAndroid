@@ -11,6 +11,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -34,6 +35,9 @@ public interface ScoutService {
 
     @GET("scouts/{id}/evaluations")
     Call<ArrayList<Evaluation>> getScoutEvaluations(@Path("id") Integer ScoutID);
+
+    @POST("evaluations")
+    Call<Message> insertEvaluation(@Body Evaluation evaluation);
 
     @GET("authenticate")
     Call<Scout> authenticateScout(@Query("username") String username, @Query("password") String password);

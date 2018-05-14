@@ -48,8 +48,12 @@ class ScoutActivity : AppCompatActivity() {
             findViewById<SwipeRefreshLayout>(R.id.EvalListContainer).setOnRefreshListener { loadEvalList() }
             findViewById<SwipeRefreshLayout>(R.id.EvalListContainer).setColorSchemeResources(R.color.colorAccent)
             findViewById<FloatingActionButton>(R.id.AddEval).setOnClickListener {
-                val eval = EvaluationFragment()
+                val eval = EvaluationFragment.newInstance(CurrentUser.IsElevated
+                        ?: false, currentScout)
                 eval.isCancelable = false
+                eval.onSaveAction = {
+                    loadEvalList()
+                }
                 eval.show(fragmentManager, "fragment_evaluation")
             }
             val scoutImage = findViewById<ImageView>(R.id.ScoutImage)
@@ -100,7 +104,7 @@ class ScoutActivity : AppCompatActivity() {
         return object : Callback<ArrayList<Evaluation>> {
             override fun onResponse(call: Call<ArrayList<Evaluation>>, response: Response<ArrayList<Evaluation>>) {
                 (findViewById<SwipeRefreshLayout>(R.id.EvalListContainer)).isRefreshing = false
-                val evalList = filterEvals(response.body()!!)
+                val evalList = sortEvals(filterEvals(response.body()!!))
                 setEvalList(evalList)
             }
 
@@ -163,5 +167,9 @@ class ScoutActivity : AppCompatActivity() {
         } else {
             return evalList
         }
+    }
+
+    private fun sortEvals(evalList: ArrayList<Evaluation>): ArrayList<Evaluation> {
+        return ArrayList(evalList.sortedWith(compareBy { it.LastModified }).reversed())
     }
 }
