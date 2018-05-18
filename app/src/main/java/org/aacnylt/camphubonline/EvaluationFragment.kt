@@ -7,6 +7,7 @@ import android.graphics.Point
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.*
@@ -45,14 +46,11 @@ class EvaluationFragment : DialogFragment() {
         motivationLabel.text = adjustSliderNumber(motivationSlider.progress).toString()
         enthusiasmLabel.text = adjustSliderNumber(enthusiasmSlider.progress).toString()
         val day = view.findViewById<EditText>(R.id.EvalFragDay)
+        val sliderLayout = view.findViewById<LinearLayout>(R.id.EvalFragSliders)
         if (isFinal) {
             day.setText(R.string.finalCaps)
             day.isEnabled = false
-            knowledgeSlider.isEnabled = false
-            skillSlider.isEnabled = false
-            confidenceSlider.isEnabled = false
-            motivationSlider.isEnabled = false
-            enthusiasmSlider.isEnabled = false
+            sliderLayout.visibility = GONE
         }
         knowledgeSlider.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
