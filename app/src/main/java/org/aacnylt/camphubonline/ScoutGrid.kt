@@ -181,9 +181,9 @@ class ScoutGrid : AppCompatActivity() {
 
     private fun filterCourses(scoutList: ArrayList<Scout>): ArrayList<Scout> {
         if (CurrentUser.IsAdmin != true) {
-            scoutList.filter {
+            return ArrayList(scoutList.filter {
                 it.CourseID == CurrentUser.CourseID
-            }
+            })
         }
         return scoutList
     }
